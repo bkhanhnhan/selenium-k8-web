@@ -16,18 +16,43 @@ public class FormInteraction {
             //Navigate to the target page
             driver.get("https://the-internet.herokuapp.com/login");
 
+            //Define selector value
+            By usernameSel = By.id("username");
+            By passwordSel = By.cssSelector("#password");
+            By loginBtnSel = By.cssSelector("[type='submit']");
+
             //Find elements
-            WebElement usernameEle = driver.findElement(By.id("username_"));
-            WebElement passwordEle = driver.findElement(By.cssSelector("#password"));
-            WebElement loginBtEle = driver.findElement(By.cssSelector("[type='submit']"));
+            WebElement usernameElm = driver.findElement(usernameSel);
+            WebElement passwordElm = driver.findElement(passwordSel);
+            WebElement loginBtnElm = driver.findElement(loginBtnSel);
+
+            //Get Attribute Value
+            System.out.println("Login button type: "
+                    + loginBtnElm.getAttribute("type"));
+            System.out.println("Login button background color: "
+                    + loginBtnElm.getCssValue("background-color"));
 
             //Interaction
-            usernameEle.clear();
-            usernameEle.sendKeys("tomsmith");
-            passwordEle.sendKeys("SuperSecretPassword!");
-            loginBtEle.click();
-        //Debug Purpose Only
-            Thread.sleep(2000);
+            usernameElm.sendKeys("tomsmith");
+            passwordElm.sendKeys("SuperSecretPassword!");
+            loginBtnElm.click();
+
+            //Go back to previous page
+            driver.navigate().back();
+
+            //Refresh
+            driver.navigate().refresh();
+
+            //Re-interact
+            usernameElm = driver.findElement(usernameSel);
+            passwordElm = driver.findElement(passwordSel);
+            loginBtnElm = driver.findElement(loginBtnSel);
+            usernameElm.sendKeys("123123123");
+            passwordElm.sendKeys("123123123");
+            loginBtnElm.click();
+
+            //Debug Purpose Only
+                Thread.sleep(2000);
         }catch (Exception e){
             e.printStackTrace();
         }
