@@ -48,9 +48,6 @@ public class MouseHoverAndNarrowDownSearchingScope implements Urls {
                 System.out.println(profileLinkElm.getText() + ": " + profileLinkElm.isDisplayed());
 
             }
-
-            Thread.sleep(2000);
-
         } catch (Exception e){
             e.printStackTrace();
         }
