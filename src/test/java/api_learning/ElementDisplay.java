@@ -17,11 +17,6 @@ public class ElementDisplay {
 
         driver.get("https://the-internet.herokuapp.com/login");
 
-        List<WebElement> elementList = driver.findElements(By.tagname("abc"));
-        if (!elementList.isEmpty()){
-            //Assert.fail("...");
-        }
-
         try{
             //Navigate to the target page
             driver.get("https://the-internet.herokuapp.com/login");
