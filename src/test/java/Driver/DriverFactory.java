@@ -32,7 +32,7 @@ public class DriverFactory {
 
         WebDriver driver = new ChromeDriver(chromeOptions);
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return driver;
     }
 }
