@@ -9,5 +9,6 @@ public interface Urls {
     String iFrameSlug = "/iframe";
     String hoverSlug = "/hovers";
     String jSAlertSlug = "/javascript_alerts";
+    String floatingMenutSlug = "/floating_menu";
 
 }
