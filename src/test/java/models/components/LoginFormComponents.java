@@ -9,16 +9,19 @@ public class LoginFormComponents {
     private final static By passwordSel = By.cssSelector("#password");
     private final By loginBtnSel = By.cssSelector("[type='submit']");
 
-    public LoginPageMod02(WebDriver driver) {
+    public LoginFormComponents(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void inputUsername(String usernameTxt){
+    public void inputUsername(String usernameTxt) {
         driver.findElement(usernameSel).sendKeys(usernameTxt);
     }
-    public void inputPassword(String passwordTxt){
+
+    public void inputPassword(String passwordTxt) {
         driver.findElement(passwordSel).sendKeys(passwordTxt);
     }
-    public void clickOnLoginBtn(){
+
+    public void clickOnLoginBtn() {
         driver.findElement(loginBtnSel).click();
+    }
 }
