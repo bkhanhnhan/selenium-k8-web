@@ -1,13 +1,23 @@
 package models.components;
 
+import java.lang.reflect.Constructor;
+
 public class ComponentExploring {
 
-    public void login(LoginPage loginPage){
-        loginPage.login();
+    public <T extends LoginPage> void login(Class<T> loginPageClass){
+        Class<?>[] parameters = new Class[]{};
+
+        try {
+            Constructor<T> constructor = loginPageClass.getConstructor(parameters);
+            T loginPageObj = constructor.newInstance();
+            loginPageObj.login();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
-        new ComponentExploring().login(new ExternalLoginPage());
-        new ComponentExploring().login(new InternalLoginPage());
+        new ComponentExploring().login(ExternalLoginPage.class);
+        new ComponentExploring().login(InternalLoginPage.class);
     }
 }
