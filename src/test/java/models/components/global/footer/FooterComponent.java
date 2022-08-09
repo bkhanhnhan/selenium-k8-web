@@ -15,13 +15,13 @@ public class FooterComponent extends Component {
     public InformationColumnComponent informationColumnComp(){
         return findComponent(InformationColumnComponent.class,driver);
     }
-    public CustomerServiceColumnComponent customerServiceColumnCompo(){
+    public CustomerServiceColumnComponent customerServiceColumnComp(){
         return findComponent(CustomerServiceColumnComponent.class,driver);
     }
     public MyAccountColumnComponent myAccountColumnComp(){
         return findComponent(MyAccountColumnComponent.class,driver);
     }
     public FollowUsColumnComponent followUsColumnCompo(){
-        return findComponent(FooterColumnComponent.class,driver);
+        return findComponent(FollowUsColumnComponent.class,driver);
     }
 }

@@ -29,13 +29,13 @@ public class Component {
     }
 
     public List<WebElement> findElements(By by){
-        return component.findElement(by);
+        return component.findElements(by);
     }
 
-    public<T extends Component> T findComponent(Class<T> componentClass, WebElement driver){
+    public<T extends Component> T findComponent(Class<T> componentClass, WebDriver driver){
         return findComponents(componentClass, driver).get(0);
     }
-    public<T extends Component> List<T> findComponents(Class<T> componentClass, final WebElement driver){
+    public<T extends Component> List<T> findComponents(Class<T> componentClass, final WebDriver driver){
         String cssSelector;
         try{
             cssSelector = componentClass.getAnnotation(ComponentCssSelector.class).value();
@@ -46,17 +46,14 @@ public class Component {
         List<WebElement> result = component.findElements(By.cssSelector(cssSelector));
 
         //Define component class construction params
-        Class<?>[] = new Class[]{WebDriver.class, WebElement.class};
+        Class<?>[] params= new Class[]{WebDriver.class, WebElement.class};
         final Constructor<T> constructor;
-        List<T> component = result.stream().map(webElement -> {
-            try{
-                constructor = componentClass.getConstructor(params);
-            }catch (Exception e) {
-                throw IllegalArgumentException("[ERR] The component must have constructor with params"
-                        + Arrays.toString(params));
+        try {
+             constructor = componentClass.getConstructor(params);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("[ERR] The component must have constructor with params"
+                    + Arrays.toString(params));
             }
-            return null;
-        }).collect(Collectors.toList());
 
         //Convert all elements to components
         List<T> component = result.stream().map(webElement -> {

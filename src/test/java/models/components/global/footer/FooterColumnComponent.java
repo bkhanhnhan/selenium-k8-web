@@ -10,9 +10,9 @@ import java.util.List;
 public class FooterColumnComponent extends Component {
 
     private final static By headerSelector = By.tagName("h3");
-    private final static By linkSelector = By.tagName("li a");
+    private final static By linkSelector = By.cssSelector("li a");
 
-    public FooterColumnComponent(WebDriver driver, WebElement component) {
+    public FooterColumnComponent(WebDriver driver, WebElement component)     {
         super(driver, component);
     }
 
@@ -20,7 +20,7 @@ public class FooterColumnComponent extends Component {
         return component.findElement(headerSelector);
     }
 
-    public List<WebDriver> linksElm(){
+    public List<WebElement> linksElm(){
         return component.findElements(linkSelector);
     }
 }

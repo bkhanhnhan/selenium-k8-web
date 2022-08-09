@@ -14,7 +14,7 @@ public class BasePage extends Component {
         this.driver = driver;
     }
 
-    public FooterComponent footerComponent(){
-        return findComponent(footerComponent.class, driver);
+    public FooterComponent footerComp(){
+        return findComponent(FooterComponent.class, driver);
     }
 }
