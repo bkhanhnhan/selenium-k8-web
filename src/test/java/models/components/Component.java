@@ -36,14 +36,14 @@ public class Component {
         return findComponents(componentClass, driver).get(0);
     }
     public<T extends Component> List<T> findComponents(Class<T> componentClass, final WebDriver driver){
-        String cssSelector;
+        By componentSelector;
         try{
-            cssSelector = componentClass.getAnnotation(ComponentCssSelector.class).value();
+            componentSelector = getComponentSelector(componentClass);
         }catch (Exception e){
             throw new IllegalArgumentException("[ERR] The component must have css selector");
         }
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(cssSelector)));
-        List<WebElement> result = component.findElements(By.cssSelector(cssSelector));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(componentSelector);
+        List<WebElement> result = component.findElements(componentSelector);
 
         //Define component class construction params
         Class<?>[] params= new Class[]{WebDriver.class, WebElement.class};
@@ -66,5 +66,16 @@ public class Component {
         }).collect(Collectors.toList());
 
         return component;
+    }
+
+    private By getComponentSelector(Class<? extends Component> componentClass){
+        if (componentClass.isAnnotationPresent(ComponentCssSelector)){
+            return By.cssSelector(componentClass.getAnnotation(ComponentCssSelector.class).value());
+        } else if (componentClass.isAnnotationPresent(ComponentXPathSelector) {
+            return By.xpath(componentClass.getAnnotation(ComponentXPathSelector.class).value());
+        } else {
+            throw new IllegalArgumentException("Component class" + componentClass + " must have annotation "
+                    + ComponentCssSelector.class.getSimpleName() + " or " + ComponentXPathSelector.class.getSimpleName());
+        }
     }
 }
