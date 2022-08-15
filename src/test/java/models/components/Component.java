@@ -42,7 +42,7 @@ public class Component {
         }catch (Exception e){
             throw new IllegalArgumentException("[ERR] The component must have css selector");
         }
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(componentSelector);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(componentSelector));
         List<WebElement> result = component.findElements(componentSelector);
 
         //Define component class construction params
@@ -69,9 +69,9 @@ public class Component {
     }
 
     private By getComponentSelector(Class<? extends Component> componentClass){
-        if (componentClass.isAnnotationPresent(ComponentCssSelector)){
+        if (componentClass.isAnnotationPresent(ComponentCssSelector.class)){
             return By.cssSelector(componentClass.getAnnotation(ComponentCssSelector.class).value());
-        } else if (componentClass.isAnnotationPresent(ComponentXPathSelector) {
+        } else if (componentClass.isAnnotationPresent(ComponentXPathSelector.class)) {
             return By.xpath(componentClass.getAnnotation(ComponentXPathSelector.class).value());
         } else {
             throw new IllegalArgumentException("Component class" + componentClass + " must have annotation "

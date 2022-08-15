@@ -6,43 +6,53 @@ import models.components.global.footer.FooterColumnComponent;
 import models.components.global.footer.InformationColumnComponent;
 import models.pages.HomePage;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import support.verification.Verifier;
 import url.Urls;
 
 public class FooterTest {
 
-    public static void main(String[] args) {
-        WebDriver driver = DriverFactory.getChromeDriver();
-        try {
-            testFooterHomePage(driver);
-            testFooterCategoryPage(driver);
-            testFooterRegisterPage(driver);
-            testFooterLoginPage(driver);
-        }catch (Exception e){
-            e.printStackTrace();
+    @Test (priority = 1, dependsOnMethods = {"testFooterRegisterPage"})
+    public void testFooterCategoryPage(){
+    }
+    @Test (priority = 2)
+    public void testFooterRegisterPage(){
+        String actualResult = "Teo";
+        String expecctedResult = "Ti";
+
+//        Verifier.verifyEquals(actualResult,expecctedResult);
+        Assert.assertEquals(actualResult,expecctedResult, "[ERR] Welcome message is incorret!");
+        Assert.assertTrue(actualResult.equals(expecctedResult), "...");
+        Assert.assertFalse(actualResult.equals(expecctedResult), "...");
+        Assert.fail();
+        Assert.fail("....");
+
         }
-        driver.quit();
+
+    @Test (priority = 3)
+    public void testFooterLoginPage(){
+
     }
 
-    private static void testFooterHomePage(WebDriver driver){
+//    @Test (priority = 4)
+    public void testFooterHomePage(){
+        WebDriver driver = DriverFactory.getChromeDriver();
         driver.get(Urls.demoURL);
-        HomePage homePage = new HomePage(driver);
-        InformationColumnComponent informationColumnComp =
-                homePage.footerComp().informationColumnComp();
-        CustomerServiceColumnComponent customerServiceColumnComp =
-                homePage.footerComp().customerServiceColumnComp();
+        try {
+            HomePage homePage = new HomePage(driver);
+            InformationColumnComponent informationColumnComp =
+                    homePage.footerComp().informationColumnComp();
+            CustomerServiceColumnComponent customerServiceColumnComp =
+                    homePage.footerComp().customerServiceColumnComp();
 
-        testFooterColumn(informationColumnComp);
-        testFooterColumn(customerServiceColumnComp);
+            testFooterColumn(informationColumnComp);
+            testFooterColumn(customerServiceColumnComp);
+        } catch (Exception ignored){
 
-    }
-    private static void testFooterCategoryPage(WebDriver driver){
+        }
 
-    }
-    private static void testFooterRegisterPage(WebDriver driver){
-
-    }
-    private static void testFooterLoginPage(WebDriver driver){
-
+        driver.quit();
     }
     private static void testFooterColumn(FooterColumnComponent footerColumnComponent){
         System.out.println(footerColumnComponent.headerElm().getText());
