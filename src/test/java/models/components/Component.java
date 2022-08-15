@@ -67,4 +67,11 @@ public class Component {
 
         return component;
     }
+
+    private By getComponentSelector(Class<? extends Component> componentClass){
+        if(componentClass.isAnnotationPresent(ComponentCssSelector)){
+            return By.cssSelector(componentClass.getAnnotation(ComponentCssSelector.class))
+        }
+
+    }
 }
