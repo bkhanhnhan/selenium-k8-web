@@ -8,13 +8,20 @@ import models.pages.HomePage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import support.verification.Verifier;
+import test_flows.global.FooterTestFlow;
 import url.Urls;
 
 public class FooterTest {
 
     @Test (priority = 1, dependsOnMethods = {"testFooterRegisterPage"})
     public void testFooterCategoryPage(){
+        WebDriver driver = DriverFactory.getChromeDriver();
+        driver.get(Urls.demoURL);
+        FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
+        footerTestFlow.verifyFooterComponent();
+
     }
     @Test (priority = 2)
     public void testFooterRegisterPage(){
@@ -23,6 +30,8 @@ public class FooterTest {
 
 //        Verifier.verifyEquals(actualResult,expecctedResult);
         Assert.assertEquals(actualResult,expecctedResult, "[ERR] Welcome message is incorret!");
+
+        System.out.println("Hello");
         Assert.assertTrue(actualResult.equals(expecctedResult), "...");
         Assert.assertFalse(actualResult.equals(expecctedResult), "...");
         Assert.fail();
@@ -32,7 +41,14 @@ public class FooterTest {
 
     @Test (priority = 3)
     public void testFooterLoginPage(){
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(1, 2);
+        softAssert.assertEquals(true, true);
+        softAssert.assertEquals(1, 3);
 
+        softAssert.assertAll();
+
+        System.out.println("Hello");
     }
 
 //    @Test (priority = 4)
