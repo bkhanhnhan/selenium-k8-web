@@ -14,7 +14,7 @@ public class FooterTest {
         try {
             driver.get(Urls.demoURL);
             FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
-            footerTestFlow.verifyFooterComponent();
+            footerTestFlow.verifyProductCatFooterComp();
         }catch(Exception e){
             e.printStackTrace();
         }

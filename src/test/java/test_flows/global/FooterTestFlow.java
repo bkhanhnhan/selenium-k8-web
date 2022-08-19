@@ -8,9 +8,13 @@ import models.components.global.footer.FooterComponent;
 import models.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import url.Urls;
 
 import java.security.SecureRandom;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +37,7 @@ public class FooterTestFlow {
     }
 
     private void verifyInformationColumn(FooterColumnComponent footerColumnComponent) {
+        String baseUrl = Urls.demoURL;
         List<String> expectedLinks = Arrays.asList(
                 "Sitemap", "Shipping & Returns", "Privacy Notice", "Conditions of Use",
                 "About us", "Contact us");
@@ -44,6 +49,7 @@ public class FooterTestFlow {
     }
 
     private void verifyCustomerServiceColumn(FooterColumnComponent footerColumnComponent) {
+        String baseUrl = Urls.demoURL;
         List<String> expectedLinks = Arrays.asList(
                 "Search", "News", "Blog", "Recently viewed products",
                 "Compare products list", "New products");
@@ -54,6 +60,7 @@ public class FooterTestFlow {
     }
 
     private void verifyAccountColumn(FooterColumnComponent footerColumnComponent) {
+        String baseUrl = Urls.demoURL;
         List<String> expectedLinks = Arrays.asList(
                 "My account", "Orders", "Addresses", "Shopping cart", "Wishlist");
         List<String> expectedHrefs = Arrays.asList(
@@ -63,6 +70,7 @@ public class FooterTestFlow {
     }
 
     private void verifyFollowUsColumn(FooterColumnComponent footerColumnComponent) {
+        String baseUrl = Urls.demoURL;
         List<String> expectedLinks = Arrays.asList(
                 "Facebook", "Twitter", "RSS", "YouTube", "Google+");
         List<String> expectedHrefs = Arrays.asList(
@@ -79,7 +87,8 @@ public class FooterTestFlow {
             Assert.fail("[ERR] There is no item on top menu");
         }
 
-        MainCatItem randomMainItemElm = mainCatElm.get(new SecureRandom().nextInt(mainCatElm.size()));
+//        MainCatItem randomMainItemElm = mainCatElm.get(new SecureRandom().nextInt(mainCatElm.size()));
+        MainCatItem randomMainItemElm = mainCatElm.get(1);
         String randomCateHref = randomMainItemElm.cateItemLinkElm().getAttribute("href");
 
         // get sublist
@@ -89,8 +98,16 @@ public class FooterTestFlow {
             randomMainItemElm.cateItemLinkElm().click();
         }else {
             int randomIndex = new SecureRandom().nextInt(cateItemComponents.size());
-            CateItemComponent randomCateRandom = cateItemComponents.get(randomIndex);
+            CateItemComponent randomCateItem = cateItemComponents.get(randomIndex);
+            randomCateHref = randomCateItem.getComponent().getAttribute("href");
+            randomCateItem.getComponent().click();
         }
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlContains(randomCateHref));
+
+        //Verify footer component
+        verifyFooterComponent();
     }
 
     private static void verifyFooterColumn(
