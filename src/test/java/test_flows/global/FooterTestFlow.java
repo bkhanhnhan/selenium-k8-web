@@ -1,7 +1,19 @@
 package test_flows.global;
 
+import models.components.global.TopmenuComponent;
+import static models.components.global.TopmenuComponent.MainCatItem;
+import static models.components.global.TopmenuComponent.CateItemComponent;
 import models.components.global.footer.FooterColumnComponent;
+import models.components.global.footer.FooterComponent;
+import models.pages.BasePage;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FooterTestFlow {
 
@@ -12,30 +24,94 @@ public class FooterTestFlow {
     }
 
     public void verifyFooterComponent(){
-        verifyInformationColumn();
-        verifyCustomerServiceColumn();
-        verifyAccountColumn();
-        verifyFollowUsColumn();
+        BasePage basePage = new BasePage(driver);
+        FooterComponent footerComponent = basePage.footerComp();
+        verifyInformationColumn(footerComponent.informationColumnComp());
+        verifyCustomerServiceColumn(footerComponent.customerServiceColumnComp());
+        verifyAccountColumn(footerComponent.myAccountColumnComp());
+        verifyFollowUsColumn(footerComponent.followUsColumnCompo());
     }
 
-    private void verifyInformationColumn() {
+    private void verifyInformationColumn(FooterColumnComponent footerColumnComponent) {
+        List<String> expectedLinks = Arrays.asList(
+                "Sitemap", "Shipping & Returns", "Privacy Notice", "Conditions of Use",
+                "About us", "Contact us");
+        List<String> expectedHrefs = Arrays.asList(
+                baseUrl + "/sitemap", baseUrl + "/shipping-returns", baseUrl + "/privacy-policy", baseUrl + "/conditions-of-use",
+                baseUrl + "/about-us", baseUrl + "/contactus");
+        verifyFooterColumn(footerColumnComponent, expectedLinks, expectedHrefs);
 
     }
 
-    private void verifyCustomerServiceColumn() {
+    private void verifyCustomerServiceColumn(FooterColumnComponent footerColumnComponent) {
+        List<String> expectedLinks = Arrays.asList(
+                "Search", "News", "Blog", "Recently viewed products",
+                "Compare products list", "New products");
+        List<String> expectedHrefs = Arrays.asList(
+                baseUrl + "/search", baseUrl + "/news", baseUrl + "/blog", baseUrl + "/recentlyviewedproducts",
+                baseUrl + "/compareproducts", baseUrl + "/newproducts");
+        verifyFooterColumn(footerColumnComponent, expectedLinks, expectedHrefs);
     }
 
-    private void verifyAccountColumn() {
+    private void verifyAccountColumn(FooterColumnComponent footerColumnComponent) {
+        List<String> expectedLinks = Arrays.asList(
+                "My account", "Orders", "Addresses", "Shopping cart", "Wishlist");
+        List<String> expectedHrefs = Arrays.asList(
+                baseUrl + "/customer/info", baseUrl + "/customer/orders", baseUrl + "/customer/addresses",
+                baseUrl + "/cart", baseUrl + "/wishlist");
+        verifyFooterColumn(footerColumnComponent, expectedLinks, expectedHrefs);
     }
 
-    private void verifyFollowUsColumn() {
+    private void verifyFollowUsColumn(FooterColumnComponent footerColumnComponent) {
+        List<String> expectedLinks = Arrays.asList(
+                "Facebook", "Twitter", "RSS", "YouTube", "Google+");
+        List<String> expectedHrefs = Arrays.asList(
+                "http://www.facebook.com/nopCommerce", "https://twitter.com/nopCommerce",
+                baseUrl + "/news/rss/1", "http://www.youtube.com/user/nopCommerce", "https://plus.google.com/+nopcommerce");
+        verifyFooterColumn(footerColumnComponent, expectedLinks, expectedHrefs);
     }
 
-    private static void testFooterColumn(FooterColumnComponent footerColumnComponent){
-        System.out.println(footerColumnComponent.headerElm().getText());
-        footerColumnComponent.linksElm().forEach(link -> {
-            System.out.println(link.getText());
-            System.out.println(link.getAttribute("href"));
-        });
+    public void verifyProductCatFooterComp(){
+        BasePage basePage = new BasePage(driver);
+        TopmenuComponent topmenuComponent = basePage.topmenuComponent();
+        List<MainCatItem> mainCatElm = topmenuComponent.mainItemElms();
+        if(mainCatElm.isEmpty()){
+            Assert.fail("[ERR] There is no item on top menu");
+        }
+
+        MainCatItem randomMainItemElm = mainCatElm.get(new SecureRandom().nextInt(mainCatElm.size()));
+        String randomCateHref = randomMainItemElm.cateItemLinkElm().getAttribute("href");
+
+        // get sublist
+        List<CateItemComponent>cateItemComponents = randomMainItemElm.cateItemComponents();
+
+        if (cateItemComponents.isEmpty()){
+            randomMainItemElm.cateItemLinkElm().click();
+        }else {
+            int randomIndex = new SecureRandom().nextInt(cateItemComponents.size());
+            CateItemComponent randomCateRandom = cateItemComponents.get(randomIndex);
+        }
+    }
+
+    private static void verifyFooterColumn(
+            FooterColumnComponent footerColumnComponent, List<String> expectedLinkTexts, List<String> expectedHrefs){
+        List<String> actualLinkTexts = new ArrayList<>();
+        List<String> actualHrefs = new ArrayList<>();
+
+        for (WebElement link : footerColumnComponent.linksElm()) {
+            actualLinkTexts.add(link.getText().trim());
+            actualHrefs.add(link.getAttribute("href"));
+
+        }
+        if(actualLinkTexts.isEmpty() || actualHrefs.isEmpty()){
+            Assert.fail("[ERR] Texts or hyperlink is empty in footer column");
+        };
+
+        //Verify link text
+        Assert.assertEquals(actualLinkTexts, expectedLinkTexts, "[ERR] Actual and expected link texts are different");
+
+        //Verify Hrefs
+        Assert.assertEquals(actualHrefs, expectedHrefs, "[ERR] Actual and expected hyper link texts are different");
+
     }
 }
