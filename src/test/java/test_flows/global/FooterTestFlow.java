@@ -2,7 +2,7 @@ package test_flows.global;
 
 import models.components.global.TopmenuComponent;
 import static models.components.global.TopmenuComponent.MainCatItem;
-import static models.components.global.TopmenuComponent.CateItemComponent;
+import static models.components.global.TopmenuComponent.SubListComponent;
 import models.components.global.footer.FooterColumnComponent;
 import models.components.global.footer.FooterComponent;
 import models.pages.BasePage;
@@ -83,13 +83,13 @@ public class FooterTestFlow {
         String randomCateHref = randomMainItemElm.cateItemLinkElm().getAttribute("href");
 
         // get sublist
-        List<CateItemComponent>cateItemComponents = randomMainItemElm.cateItemComponents();
+        List<SubListComponent>sublistComponents = randomMainItemElm.subListComponents();
 
-        if (cateItemComponents.isEmpty()){
+        if (sublistComponents.isEmpty()){
             randomMainItemElm.cateItemLinkElm().click();
         }else {
-            int randomIndex = new SecureRandom().nextInt(cateItemComponents.size());
-            CateItemComponent randomCateRandom = cateItemComponents.get(randomIndex);
+            int randomIndex = new SecureRandom().nextInt(sublistComponents.size());
+            SubListComponent randomCateRandom = sublistComponents.get(randomIndex);
         }
     }
 
