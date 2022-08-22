@@ -21,7 +21,7 @@ public class TopmenuComponent extends Component {
     }
 
     @ComponentCssSelector(".top-menu > li")
-    public static class MainCatItem () extends Component{
+    public static class MainCatItem extends Component{
 
         public MainCatItem(WebDriver driver, WebElement component) {
             super(driver, component);
