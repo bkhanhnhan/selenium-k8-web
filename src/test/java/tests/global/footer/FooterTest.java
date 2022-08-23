@@ -1,38 +1,32 @@
 package tests.global.footer;
 
-import Driver.DriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 import test_flows.global.FooterTestFlow;
+import tests.BaseTest;
 import url.Urls;
 
-public class FooterTest {
+public class FooterTest extends BaseTest {
 
     @Test ()
     public void testFooterCategoryPage(){
-        WebDriver driver = DriverFactory.getChromeDriver();
-        try {
-            driver.get(Urls.demoURL);
-            FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
-            footerTestFlow.verifyFooterComponent();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        driver.quit();
+        driver.get(Urls.demoURL);
+        FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
+        footerTestFlow.verifyProductCatFooterComp();
     }
+
     @Test ()
+    public void testFooterHomePage(){
+        driver.get(Urls.demoURL);
+        FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
+        footerTestFlow.verifyFooterComponent();
+    }
+
     public void testFooterRegisterPage(){
 
-
     }
 
-    @Test ()
     public void testFooterLoginPage(){
-
     }
 
-     @Test ()
-    public void testFooterHomePage(){
 
-    }
 }
