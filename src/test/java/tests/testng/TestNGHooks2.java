@@ -2,7 +2,7 @@ package tests.testng;
 
 import org.testng.annotations.*;
 
-public class TestNGHooks1 {
+public class TestNGHooks2 {
 
     @BeforeSuite
     public void beforeSuite(){
