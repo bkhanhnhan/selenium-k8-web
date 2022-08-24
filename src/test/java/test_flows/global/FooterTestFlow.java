@@ -2,7 +2,7 @@ package test_flows.global;
 
 import models.components.global.TopmenuComponent;
 import static models.components.global.TopmenuComponent.MainCatItem;
-import static models.components.global.TopmenuComponent.CateItemComponent;
+import static models.components.global.TopmenuComponent.SublistComponent;
 import models.components.global.footer.FooterColumnComponent;
 import models.components.global.footer.FooterComponent;
 import models.pages.BasePage;
@@ -87,18 +87,17 @@ public class FooterTestFlow {
             Assert.fail("[ERR] There is no item on top menu");
         }
 
-//        MainCatItem randomMainItemElm = mainCatElm.get(new SecureRandom().nextInt(mainCatElm.size()));
-        MainCatItem randomMainItemElm = mainCatElm.get(1);
+        MainCatItem randomMainItemElm = mainCatElm.get(new SecureRandom().nextInt(mainCatElm.size()));
         String randomCateHref = randomMainItemElm.cateItemLinkElm().getAttribute("href");
 
         // get sublist
-        List<CateItemComponent>cateItemComponents = randomMainItemElm.cateItemComponents();
+        List<SublistComponent>SublistComponents = randomMainItemElm.cateItemComponents();
 
-        if (cateItemComponents.isEmpty()){
+        if (SublistComponents.isEmpty()){
             randomMainItemElm.cateItemLinkElm().click();
         }else {
-            int randomIndex = new SecureRandom().nextInt(cateItemComponents.size());
-            CateItemComponent randomCateItem = cateItemComponents.get(randomIndex);
+            int randomIndex = new SecureRandom().nextInt(SublistComponents.size());
+            SublistComponent randomCateItem = SublistComponents.get(randomIndex);
             randomCateHref = randomCateItem.getComponent().getAttribute("href");
             randomCateItem.getComponent().click();
         }

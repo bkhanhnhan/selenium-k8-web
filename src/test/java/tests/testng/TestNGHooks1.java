@@ -1,6 +1,12 @@
 package tests.testng;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class TestNGHooks1 {
 
@@ -49,6 +55,4 @@ public class TestNGHooks1 {
     public void afterSuite(){
         System.out.println("AfterSuite");
     }
-
-
 }
